@@ -10,7 +10,8 @@ app.use(express.json());
 
 connectDB();
 app.use("/api/auth", authRoutes);
-const port = process.env.PORT | 5000;
+
+const port = process.env.PORT || 5000;
 app.listen(port, () => {
   console.log(`server running successfully on port ${port}`);
 });
