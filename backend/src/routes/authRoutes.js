@@ -4,9 +4,6 @@ const express = require("express");
 const router = express.Router();
 const authGuard = require("../middleware/authGaurd");
 router.post("/register", registerUser);
-// router.post("/login", loginUser);
-// router.get("/api/test-hod", authGuard, roleCheck("HOD"), (req, res) => {
-//   res.json({ message: `Welcome HOD of college ${req.user.collegeCode}` });
-// });
+router.post("/login", loginUser);
 
 module.exports = router;
