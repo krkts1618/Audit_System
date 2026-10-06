@@ -4,7 +4,10 @@ const storage = multer.memoryStorage(); //memory storage is better for storing t
 
 const fileFilter = (req, file, cb) => {
   // Check if it is a CSV by mimetype OR file extension
-  if (file.mimetype === "text/csv" || file.originalname.endsWith(".csv")) {
+  if (
+    file.mimetype === "text/csv" ||
+    file.mimetype === "application/vnd.ms-excel"
+  ) {
     cb(null, true); // Accept the file
   } else {
     cb(new Error("Invalid file type. Only CSV files are allowed."), false); // Reject it
