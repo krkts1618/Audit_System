@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const RoomSchema = new mongoose.schema(
+const RoomSchema = new mongoose.Schema(
   {
     roomNumber: { type: String, required: true },
     floor: { type: String, required: true },

@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const AssetSchema = new mongoose.schema(
+const AssetSchema = new mongoose.Schema(
   {
     assetTagId: { type: String, required: true },
     category: { type: String, required: true },

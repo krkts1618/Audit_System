@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const TicketSchema = new mongoose.schema(
+const TicketSchema = new mongoose.Schema(
   {
     description: { type: String, required: true },
     severity: { type: String, enum: ["Routine", "Critical"], required: true },
