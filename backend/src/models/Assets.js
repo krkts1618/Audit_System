@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+
 const AssetSchema = new mongoose.Schema(
   {
     assetTagId: { type: String, required: true },
