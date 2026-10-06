@@ -3,10 +3,11 @@ const multer = require("multer");
 const storage = multer.memoryStorage(); //memory storage is better for storing the files temporarily rather than using the diskStorage
 
 const fileFilter = (req, file, cb) => {
-  if (file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
-    cb(null, true);
+  // Check if it is a CSV by mimetype OR file extension
+  if (file.mimetype === "text/csv" || file.originalname.endsWith(".csv")) {
+    cb(null, true); // Accept the file
   } else {
-    cb(new Error("Invalid file type. Only JPEG and PNG are allowed."), false);
+    cb(new Error("Invalid file type. Only CSV files are allowed."), false); // Reject it
   }
 };
 
