@@ -9,3 +9,4 @@ const rolecheck = (...allowedRoles) => {
     next();
   };
 };
+module.exports = rolecheck;
