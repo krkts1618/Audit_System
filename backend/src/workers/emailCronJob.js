@@ -1,14 +1,6 @@
-const nodemailer = require("nodemailer");
 const cron = require("node-cron");
 const Ticket = require("../models/Ticket");
-
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-});
+const sendEmail = require("../utils/mailer");
 
 cron.schedule("*/1 * * * *", async () => {
   try {
@@ -20,25 +12,37 @@ cron.schedule("*/1 * * * *", async () => {
     if (openTickets.length === 0) {
       return;
     }
-    let emailText = `Hello Maintenance Team,\n\nHere are the routine fixes for today:\n\n`;
 
-    openTickets.forEach((ticket, index) => {
-      emailText += `${index + 1}. ${ticket.assetRef.name} (${ticket.assetRef.assetTagId})\n`;
-      emailText += `   Issue: ${ticket.description}\n\n`;
+    let emailHTML = `
+      <h3>Hello Maintenance Team,</h3>
+      <p>Here are the routine fixes for today:</p>
+      <ul>
+    `;
+
+    openTickets.forEach((ticket) => {
+      const assetName = ticket.assetRef?.name || "Unknown Asset";
+      const assetTag = ticket.assetRef?.assetTagId || "N/A";
+
+      emailHTML += `<li><strong>${assetName} (${assetTag}):</strong> ${ticket.description}</li>`;
     });
-    await transporter.sendMail({
-      from: process.env.EMAIL_USER,
-      to: "ravikumar.kocherla24@sasi.ac.in",
-      subject: `Routine Maintenance Batch - ${openTickets.length} Items`,
-      text: emailText,
-    });
+
+    emailHTML += `</ul>`;
+
+    await sendEmail(
+      "ravikumar.kocherla24@sasi.ac.in",
+      `Routine Maintenance Batch - ${openTickets.length} Items`,
+      emailHTML,
+    );
+
     const ticketIds = openTickets.map((ticket) => ticket._id);
-
     await Ticket.updateMany(
       { _id: { $in: ticketIds } },
       { $set: { status: "Dispatched" } },
     );
-    console.log("[Cron] Database updated: Tickets marked as Dispatched.");
+
+    console.log(
+      `[Cron] Batch email sent and ${openTickets.length} tickets marked as Dispatched.`,
+    );
   } catch (error) {
     console.error("[Cron Error]:", error.message);
   }
