@@ -1,5 +1,6 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import ProtectedRoute from "./components/common/ProtectedRoute";
+import Register from "./pages/auth/Register";
 
 const Login = () => (
   <h1 className="text-white text-center mt-10 text-2xl">
@@ -27,7 +28,7 @@ const App = () => {
     <>
       <Routes>
         <Route path="/login" element={<Login />} />
-
+        <Route path="/register" element={<Register />}></Route>
         <Route
           path="/hod/dashboard"
           element={

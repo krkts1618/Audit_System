@@ -6,13 +6,15 @@ const registerUser = async (userData) => {
 };
 
 const loginUser = async (credentials) => {
-  try {
-    const response = await api.post("/api/auth/login", credentials);
-    return response.data;
-  } catch (error) {
-    console.error("Login error:", error);
-    throw error;
-  }
+  
+    try{
+        const response = await api.post("/api/auth/login", credentials);
+  return response.data;
+    }
+    catch(error){
+        console.error("Login error:", error);
+        throw error;
+    }
 };
 
-export { registerUser, loginUser };
+export {registerUser, loginUser};
