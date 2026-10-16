@@ -1,12 +1,8 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import ProtectedRoute from "./components/common/ProtectedRoute";
 import Register from "./pages/auth/Register";
+import Login from "./pages/auth/Login";
 
-const Login = () => (
-  <h1 className="text-white text-center mt-10 text-2xl">
-    Login Page (Pending)
-  </h1>
-);
 const HodDashboard = () => (
   <h1 className="text-white text-center mt-10 text-2xl">
     HOD Dashboard (Pending)
