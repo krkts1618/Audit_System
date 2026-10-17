@@ -2,6 +2,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import ProtectedRoute from "./components/common/ProtectedRoute";
 import Register from "./pages/auth/Register";
 import Login from "./pages/auth/Login";
+import Layout from "./pages/auth/Layout";
 
 const HodDashboard = () => (
   <h1 className="text-white text-center mt-10 text-2xl">
@@ -25,32 +26,34 @@ const App = () => {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />}></Route>
-        <Route
-          path="/hod/dashboard"
-          element={
-            <ProtectedRoute allowedRoles={["HOD"]}>
-              <HodDashboard />
-            </ProtectedRoute>
-          }
-        />
+        <Route element={<Layout />}>
+          <Route
+            path="/hod/dashboard"
+            element={
+              <ProtectedRoute allowedRoles={["HOD"]}>
+                <HodDashboard />
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/caretaker/report"
-          element={
-            <ProtectedRoute allowedRoles={["Care Taker"]}>
-              <CareTakerReport />
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/caretaker/report"
+            element={
+              <ProtectedRoute allowedRoles={["Care Taker"]}>
+                <CareTakerReport />
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path="/fixer/board"
-          element={
-            <ProtectedRoute allowedRoles={["Fixer"]}>
-              <FixerBoard />
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/fixer/board"
+            element={
+              <ProtectedRoute allowedRoles={["Fixer"]}>
+                <FixerBoard />
+              </ProtectedRoute>
+            }
+          />
+        </Route>
 
         <Route path="*" element={<Navigate to="/login" />} />
       </Routes>
