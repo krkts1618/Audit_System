@@ -3,6 +3,7 @@ import ProtectedRoute from "./components/common/ProtectedRoute";
 import Register from "./pages/auth/Register";
 import Login from "./pages/auth/Login";
 import Layout from "./pages/auth/Layout";
+import Ingestion from "./pages/hod/Ingestion";
 
 const HodDashboard = () => (
   <h1 className="text-white text-center mt-10 text-2xl">
@@ -29,12 +30,24 @@ const App = () => {
         <Route element={<Layout />}>
           <Route
             path="/hod/dashboard"
+
             element={
               <ProtectedRoute allowedRoles={["HOD"]}>
                 <HodDashboard />
               </ProtectedRoute>
             }
           />
+
+
+          <Route
+            path="/hod/ingestion"
+            element={
+              <ProtectedRoute allowedRoles={["HOD"]}>
+                <Ingestion />
+              </ProtectedRoute>
+            }
+          />
+
 
           <Route
             path="/caretaker/report"

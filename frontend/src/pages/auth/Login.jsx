@@ -25,16 +25,40 @@ const Login = () => {
     },
   });
 
+  const decodeToken = (token) => {
+    try {
+      const payloadBase64 = token.split(".")[1];
+      if (!payloadBase64) return null;
+      const base64 = payloadBase64.replace(/-/g, "+").replace(/_/g, "/");
+      const jsonPayload = decodeURIComponent(
+        atob(base64)
+          .split("")
+          .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
+          .join("")
+      );
+      return JSON.parse(jsonPayload);
+    } catch {
+      return null;
+    }
+  };
+
   async function onSubmitForm(data) {
     setIsSubmitting(true);
     setAuthError(""); 
     
     try {
       const response = await loginUser(data);
+      const token = response.token;
+      const decoded = decodeToken(token) || {};
+      const user = response.user || {
+        id: decoded.id,
+        role: decoded.role,
+        email: data.email,
+      };
       
-      login(response.user, response.token);
+      login(user, token);
       
-      const userRole = response.user.role;
+      const userRole = user?.role;
       if (userRole === "HOD") {
         navigate("/hod/dashboard");
       } else if (userRole === "Care Taker") {
@@ -47,11 +71,12 @@ const Login = () => {
       
     } catch (e) {
       console.error("Login failed:", e);
-      setAuthError(e.response?.data?.message || "Invalid email or password. Please try again.");
+      setAuthError(e.response?.data?.message || e.message || "Invalid email or password. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
   }
+
 
   return (
     <div

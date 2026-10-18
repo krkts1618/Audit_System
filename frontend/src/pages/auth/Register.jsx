@@ -9,6 +9,7 @@ import GlassButton from "../../components/common/GlassButton";
 const Register = () => {
   const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false); // Controls the button spinner
+  const [errorMessage, setErrorMessage] = useState("");
 
   const {
     register,
@@ -20,22 +21,28 @@ const Register = () => {
       name: "",
       email: "",
       password: "",
+      department: "",
       role: "",
     },
   });
 
   async function onSubmitForm(data) {
     setIsSubmitting(true);
+    setErrorMessage("");
     try {
       await registerUser(data);
       navigate("/login");
       reset();
     } catch (e) {
       console.error("Registration failed:", e);
+      setErrorMessage(
+        e?.response?.data?.message || "Registration failed. Please try again."
+      );
     } finally {
       setIsSubmitting(false);
     }
   }
+
 
   return (
     <div
@@ -52,6 +59,12 @@ const Register = () => {
           <h1 className="text-3xl font-bold text-slate-100">Audit System</h1>
           <p className="text-slate-400 text-sm mt-1">Create your account</p>
         </div>
+
+        {errorMessage && (
+          <div className="mb-4 p-3 rounded-lg bg-red-500/10 border border-red-500/30 text-red-400 text-sm text-center">
+            {errorMessage}
+          </div>
+        )}
 
         <GlassInput
           id="name"
@@ -78,6 +91,17 @@ const Register = () => {
         />
 
         <GlassInput
+          id="department"
+          type="text"
+          label="Department"
+          placeholder="e.g. Computer Science, Mechanical"
+          error={errors.department}
+          {...register("department", {
+            required: "Department is required",
+          })}
+        />
+
+        <GlassInput
           id="password"
           type="password"
           label="Password"
@@ -91,6 +115,7 @@ const Register = () => {
             },
           })}
         />
+
 
         <div className="flex flex-col mb-6">
           <label
