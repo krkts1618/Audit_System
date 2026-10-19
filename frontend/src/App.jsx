@@ -4,12 +4,7 @@ import Register from "./pages/auth/Register";
 import Login from "./pages/auth/Login";
 import Layout from "./pages/auth/Layout";
 import Ingestion from "./pages/hod/Ingestion";
-
-const HodDashboard = () => (
-  <h1 className="text-white text-center mt-10 text-2xl">
-    HOD Dashboard (Pending)
-  </h1>
-);
+import HodDashboard from "./pages/hod/HodDashboard";
 const CareTakerReport = () => (
   <h1 className="text-white text-center mt-10 text-2xl">
     Care Taker Form (Pending)

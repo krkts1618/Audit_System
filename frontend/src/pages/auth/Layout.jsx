@@ -308,7 +308,7 @@ const Layout = () => {
           <div className="absolute top-1/3 right-10 w-72 h-72 rounded-full bg-indigo-600/15 filter blur-[90px] pointer-events-none dark:opacity-100 opacity-20 transition-opacity"></div>
           <div className="absolute bottom-20 left-10 w-80 h-80 rounded-full bg-purple-600/10 filter blur-[110px] pointer-events-none dark:opacity-100 opacity-15 transition-opacity"></div>
 
-          <div className="relative z-10 max-w-5xl mx-auto">
+          <div className="relative z-10 max-w-6xl mx-auto">
             <Outlet />
           </div>
         </main>

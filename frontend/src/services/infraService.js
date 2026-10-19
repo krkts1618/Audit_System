@@ -55,7 +55,46 @@ export const getRooms = async () => {
   }
 };
 
+/**
+ * Create a new room
+ * @param {Object} data - Room payload ({ block, department, floor, roomNumber })
+ * @returns {Promise<any>} Response data from server
+ */
+export const createRoom = async (data) => {
+  if (!data) {
+    throw new Error("Room data is required");
+  }
+  try {
+    const response = await api.post("/api/rooms", data);
+    return response.data;
+  } catch (err) {
+    if (err.response?.status === 404) {
+      const fallbackResponse = await api.post("/api/infra/rooms", data);
+      return fallbackResponse.data;
+    }
+    throw err;
+  }
+};
+
+/**
+ * Fetch all assets (if supported by backend)
+ * @returns {Promise<any|null>} Response data or null if not supported
+ */
+export const getAssets = async () => {
+  try {
+    const response = await api.get("/api/assets");
+    return response.data;
+  } catch (err) {
+    if (err.response?.status === 404) {
+      return null;
+    }
+    throw err;
+  }
+};
+
 export default {
   uploadCsv,
   getRooms,
+  createRoom,
+  getAssets,
 };

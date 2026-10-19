@@ -19,8 +19,16 @@ export const createTicket = async (data) => {
  * @returns {Promise<any>} Response data from server
  */
 export const getTickets = async () => {
-  const response = await api.get("/api/tickets");
-  return response.data;
+  try {
+    const response = await api.get("/api/tickets");
+    return response.data;
+  } catch (err) {
+    if (err.response?.status === 404) {
+      const fallbackResponse = await api.get("/api/infra/tickets");
+      return fallbackResponse.data;
+    }
+    throw err;
+  }
 };
 
 /**
