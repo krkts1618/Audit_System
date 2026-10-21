@@ -5,16 +5,8 @@ import Login from "./pages/auth/Login";
 import Layout from "./pages/auth/Layout";
 import Ingestion from "./pages/hod/Ingestion";
 import HodDashboard from "./pages/hod/HodDashboard";
-const CareTakerReport = () => (
-  <h1 className="text-white text-center mt-10 text-2xl">
-    Care Taker Form (Pending)
-  </h1>
-);
-const FixerBoard = () => (
-  <h1 className="text-white text-center mt-10 text-2xl">
-    Fixer Board (Pending)
-  </h1>
-);
+import CareTakerReport from "./pages/caretaker/CareTakerReport";
+import FixerBoard from "./pages/fixer/FixerBoard";
 
 const App = () => {
   return (
@@ -25,14 +17,12 @@ const App = () => {
         <Route element={<Layout />}>
           <Route
             path="/hod/dashboard"
-
             element={
               <ProtectedRoute allowedRoles={["HOD"]}>
                 <HodDashboard />
               </ProtectedRoute>
             }
           />
-
 
           <Route
             path="/hod/ingestion"
@@ -42,7 +32,6 @@ const App = () => {
               </ProtectedRoute>
             }
           />
-
 
           <Route
             path="/caretaker/report"
